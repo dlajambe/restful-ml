@@ -1,13 +1,12 @@
 # RESTful ML
 
-A lightweight REST api for deploying machine learning models to the web.
+A lightweight REST api template for deploying machine learning models to the web.
 
 ## Description
 
-This project involves the creation of a generic REsponsive State Transfer (REST) API that can be used to communicate with a variety of machine learning models. The API contains two basic resources:
+This project involves the creation of a generic REsponsive State Transfer (REST) API that can be used to communicate with a variety of machine learning models. It can be thought of as a template; the endpoints provided can be modified or extended to work with a variety of architectures.
 
-1. Prediction: This resource is used to generate predictions from a model through a POST request.
-2. Health: This resource provides a report indicating the status of the API.
+The API contains a `LanguageModel` resource as an example, which can be used to generate predictions from a model through a POST request. Since it is a language model, it expects to receive an input string through a POST request.
 
 ## Getting Started
 
@@ -29,9 +28,9 @@ This will use Flask to start up a development web server on your machine at `htt
 
 ### Testing
 
-This application uses the PyTest unit testing library to test the main classes and functions. To test the application, navigate to the `restful-ml/` directory through the command line and execute the following command: 
+This application uses the PyTest unit testing library to test the main classes and functions; tests are stored in the `tests` directory. To test the application, navigate to the `restful-ml/` directory through the command line and execute the following command: 
 ```
-pytest test_app.py
+py.test tests
 ```
 It is recommended that you add more unit tests as you extend the API with additional endpoints and functionality. This ensures that new and old code is tested continuously during development.
 
