@@ -4,9 +4,17 @@ A lightweight REST api template for deploying machine learning models to the web
 
 ## Description
 
-This project involves the creation of a generic REsponsive State Transfer (REST) API that can be used to communicate with a variety of machine learning models. It can be thought of as a template; the endpoints provided can be modified or extended to work with a variety of architectures.
+This project involves the creation of a generic REsponsive State Transfer (REST) API that can be used to obtain predictions from machine learning models. It can be thought of as a template; the models, data preprocessors, and endpoints provided are intended to be modified and/or extended to work with new architectures.
 
-The API contains a `LanguageModel` resource as an example, which can be used to generate predictions from a model through a POST request. Since it is a language model, it expects to receive an input string through a POST request.
+The API contains two endpoints that can be used to generate model predictions with a POST request:
+
+1. `StringPrediction`: Generates a model prediction from models that require string-based input, e.g. language models.
+2. `FloatPrediction`: Generates a model prediction from models that require input vector of floating point numbers.
+
+The POST request must contain the input data as a JSON key-value pair:
+
+`StringPrediction: {'input_str' : 'example input data'}`
+`FloatPrediction: {'input_float' : [2.67, 1.59, 9.41]}`
 
 ## Getting Started
 
@@ -24,7 +32,7 @@ The application can be run locally as a Flask web server by through the command 
 ```
 python app.py
 ```
-This will use Flask to start up a development web server on your machine at `http://127.0.0.1:5000`. While great for testing the application, the Flask web server's poor scaling makes it unsuitable for production use. To use the API in a production environment, it is instead recommended to use a purpose-built production Python web server, such as [Gunicorn](https://gunicorn.org/).
+This uses Flask to start a development web server locally at `http://127.0.0.1:5000`. While useful for testing the application, the Flask web server's poor scaling makes it unsuitable for production use. To use the API in a production environment, it is instead recommended to use a purpose-built Python [WSGI server](https://en.wikipedia.org/wiki/Web_Server_Gateway_Interface), such as [Gunicorn](https://gunicorn.org/).
 
 ### Testing
 
@@ -32,7 +40,7 @@ This application uses the PyTest unit testing library to test the main classes a
 ```
 py.test tests
 ```
-It is recommended that you add more unit tests as you extend the API with additional endpoints and functionality. This ensures that new and old code is tested continuously during development.
+More unit tests should be added as the API is extended with additional endpoints and functionality. This ensures that new and old code is tested continuously during development.
 
 ### Updating the environment files
 
