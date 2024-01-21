@@ -13,8 +13,8 @@ The API contains two endpoints that can be used to generate model predictions wi
 
 The POST request must contain the input data as a JSON key-value pair:
 
-`StringPrediction: {'input_str' : 'example input data'}`
-`FloatPrediction: {'input_floats' : [2.67, 1.59, 9.41]}`
+`StringPrediction: {'input_data' : 'example input data'}`
+`FloatPrediction: {'input_data' : [2.67, 1.59, 9.41]}`
 
 ## Getting Started
 

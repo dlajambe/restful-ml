@@ -15,7 +15,7 @@ def client() -> Flask:
 
 def test_string_prediction(client: FlaskClient):
     """Tests a POST request at the StringPrediction endpoint."""
-    input_data = {'input_str' : 'Hazel'}
+    input_data = {'input_data' : 'Hazel'}
     response = client.post(
         path=(BASE + StringPrediction.endpoint_suffix),
         json=input_data)
@@ -23,7 +23,7 @@ def test_string_prediction(client: FlaskClient):
 
 def test_float_prediction(client: FlaskClient):
     """Tests a POST request at the FloatPrediction endpoint."""
-    input_data = {'input_floats' : [0.5, 0.6, 10.0]}
+    input_data = {'input_data' : [0.5, 0.6, 10.0]}
     response = client.post(
         path=(BASE + FloatPrediction.endpoint_suffix), json=input_data)
     assert response.status_code == 200
