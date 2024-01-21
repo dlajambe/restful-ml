@@ -14,7 +14,7 @@ The API contains two endpoints that can be used to generate model predictions wi
 The POST request must contain the input data as a JSON key-value pair:
 
 `StringPrediction: {'input_str' : 'example input data'}`
-`FloatPrediction: {'input_float' : [2.67, 1.59, 9.41]}`
+`FloatPrediction: {'input_floats' : [2.67, 1.59, 9.41]}`
 
 ## Getting Started
 
@@ -36,9 +36,9 @@ This uses Flask to start a development web server locally at `http://127.0.0.1:5
 
 ### Testing
 
-This application uses the PyTest unit testing library to test the main classes and functions; tests are stored in the `tests` directory. To test the application, navigate to the `restful-ml/` directory through the command line and execute the following command: 
+This application uses the PyTest unit testing library to test the main classes and functions; tests are stored in the `test_app.py` file. To test the application, navigate to the `restful-ml/` directory through the command line and execute the following command: 
 ```
-py.test tests
+pytest test_app.py
 ```
 More unit tests should be added as the API is extended with additional endpoints and functionality. This ensures that new and old code is tested continuously during development.
 
