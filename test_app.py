@@ -2,13 +2,14 @@ from flask import Flask
 from flask.testing import FlaskClient
 import pytest
 
-from modules.endpoints import create_api, StringPrediction, FloatPrediction
+from modules.initialization import create_app, create_api
+from modules.endpoints import StringPrediction, FloatPrediction
 
 BASE = 'http://127.0.0.1:5000'
 
 @pytest.fixture
 def client() -> Flask:
-    app = Flask(__name__)
+    app = create_app()
     create_api(app)
     client = app.test_client()
     yield client

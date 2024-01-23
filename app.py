@@ -1,8 +1,9 @@
-from flask import Flask
-from flask_restful import Api, Resource
-from modules.endpoints import create_api
+"""Entry point into the program; run this script to launch the API as a
+locally-hosted development server.
+"""
+from modules.initialization import create_app, create_api
 
-app = Flask(__name__)
+app = create_app()
 api = create_api(app)
 
 if __name__ == '__main__':

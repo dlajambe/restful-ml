@@ -1,9 +1,7 @@
 """This file contains endpoints that allow predictions to be obtained
 from different types of models with a URL. 
 """
-
-from flask import Flask
-from flask_restful import Api, Resource, reqparse
+from flask_restful import Resource, reqparse
 from modules.models import LanguageModel, NumericalModel
 
 # Loading models can be expensive, so they are initialized output the
@@ -15,7 +13,7 @@ OK = 200
 BAD_REQUEST = 400
 
 class StringPrediction(Resource):
-    """Generate a single prediction from a machine learning model at the
+    """Handles requests for string-based model predictions at the
     /string-prediction endpoint.
 
     This resource is intended to be used for models that receive input
@@ -89,9 +87,3 @@ class FloatPrediction(Resource):
         output = numerical_model.predict(input_data)
         response = {'prediction': output}
         return response, OK
-
-def create_api(app: Flask) -> Api:
-    api = Api(app)
-    api.add_resource(StringPrediction, StringPrediction.endpoint_suffix)
-    api.add_resource(FloatPrediction, FloatPrediction.endpoint_suffix)
-    return api
