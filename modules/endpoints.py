@@ -1,6 +1,7 @@
 """This file contains endpoints that allow predictions to be obtained
 from different types of models with a URL. 
 """
+import logging
 from flask_restful import Resource, reqparse
 from modules.models import LanguageModel, NumericalModel
 
@@ -11,6 +12,11 @@ numerical_model = NumericalModel()
 
 OK = 200
 BAD_REQUEST = 400
+
+# TODO: Put duplicated POST request code in a common function that can
+# be called by any resource
+def generate_prediction(model):
+    pass
 
 class StringPrediction(Resource):
     """Handles requests for string-based model predictions at the
@@ -37,16 +43,25 @@ class StringPrediction(Resource):
     endpoint_suffix = '/string-prediction'
     
     def post(self) -> dict:
+        logging.info(
+            'Processing incoming POST request for {}'.
+            format(StringPrediction.endpoint_suffix))
         try:
             args = StringPrediction.req_parser.parse_args()
+            logging.info('\tArguments parsed: {}'.format(args))
         except:
+            error_type = 'Bad request'
+            error_msg = (
+                'The input data could not be parsed - verify JSON format')
             response = {
-                'error': 'Bad request',
-                'message': 'The input data could not be parsed - verify JSON '
-                'format'}
+                'error': error_type,
+                'message': error_msg}
+            logging.error(
+                '\t{} ({}): {}'.format(error_type, BAD_REQUEST, error_msg))
             return response, BAD_REQUEST
         input_data = args['input_data']
         output = language_model.predict(input_data)
+        logging.info('\tPrediction generated: {}'.format(output))
         response = {'prediction': output}
         return response, OK
     
@@ -75,15 +90,24 @@ class FloatPrediction(Resource):
     endpoint_suffix = '/float-prediction'
     
     def post(self) -> dict:
+        logging.info(
+            'Processing incoming POST request for {}'.
+            format(FloatPrediction.endpoint_suffix))
         try:
             args = FloatPrediction.req_parser.parse_args()
+            logging.info('\tArguments parsed: {}'.format(args))
         except:
+            error_type = 'Bad request'
+            error_msg = (
+                'The input data could not be parsed - verify JSON format')
             response = {
-                'error': 'Bad request',
-                'message': 'The input data could not be parsed. Verify JSON '
-                'format'}
+                'error': error_type,
+                'message': error_msg}
+            logging.error(
+                '\t{} ({}): {}'.format(error_type, BAD_REQUEST, error_msg))
             return response, BAD_REQUEST
         input_data = args['input_data']
         output = numerical_model.predict(input_data)
+        logging.info('\tPrediction generated: {}'.format(output))
         response = {'prediction': output}
         return response, OK

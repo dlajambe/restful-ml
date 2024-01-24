@@ -38,7 +38,8 @@ def initialize_file_logger():
     log_formatter = logging.Formatter(
         '[%(asctime)s] [%(levelname)s]  %(message)s',
         datefmt='%H:%M:%S')
-    log_path = log_root + year_str +'/' + month_str + '/' + 'ml_api.log'
+    log_path = (log_root + year_str +'/' + month_str + '/' 
+                + date_str + 'ml_api.log')
     file_handler = TimedRotatingFileHandler(
             filename=log_path, when='midnight', backupCount=30)
     file_handler.suffix = '%Y-%m-%d'
@@ -52,7 +53,9 @@ def initialize_file_logger():
 
     # Step 3 - Format the log output so it contains a time stamp and log
     # log level
-    logging.basicConfig(handlers=handlers)
+    logging.basicConfig(
+        handlers=handlers, level=logging.DEBUG)
+    logging.info('File logger initialized successfully.')
 
     
 
