@@ -1,20 +1,26 @@
 # RESTful ML
 
-A lightweight REST api template for deploying machine learning models to the web.
+An extensible and modular REST API template for interacting with web-deployed machine learning models.
 
 ## Description
 
-This project involves the creation of a generic REsponsive State Transfer (REST) API that can be used to obtain predictions from machine learning models. It can be thought of as a template; the models, data preprocessors, and endpoints provided are intended to be modified and/or extended to work with new architectures.
+This project involves the creation of a generic REsponsive State Transfer (REST) API that can be used to obtain predictions from web-deployed machine learning models. It can be thought of as a template; the models, data preprocessors, and endpoints provided are intended to be modified and/or extended to work with customized user architectures.
 
 The API contains two endpoints that can be used to generate model predictions with a POST request:
 
-1. `StringPrediction`: Generates a model prediction from models that require string-based input, e.g. language models.
-2. `FloatPrediction`: Generates a model prediction from models that require input vector of floating point numbers.
+1. `StringPrediction`: Generates a model prediction from models that require string-based input, e.g. language models
+2. `FloatPrediction`: Generates a model prediction from models that require an input vector of floating point numbers
 
-The POST request must contain the input data as a JSON key-value pair:
+The POST request must contain the input data as a JSON key-value pair with the following format:
 
-`StringPrediction: {'input_data' : 'example input data'}`
-`FloatPrediction: {'input_data' : [2.67, 1.59, 9.41]}`
+`StringPrediction: {"input_data" : "example input data"}`
+`FloatPrediction: {"input_data" : [2.67, 1.59, 9.41]}`
+
+When an endpoint receives a POST request, it passes the provided input data to the appropriate model, the model generates a prediction, and the result is returned as a JSON file with the following format:
+
+`{"prediction": "example prediction"}`
+
+The project contains two generic model templates that can be modified or replaced. The `StringPrediction` endpoint is mapped to the `LanguageModel` class, whereas the `FloatPrediction` endpoint is mapped to the `NumericalModel` class.
 
 ## Getting Started
 
