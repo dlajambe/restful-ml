@@ -56,3 +56,6 @@ class TestFloatPrediction():
         # Incorrectly formatted requests should return a BAD_REQUEST
         # status code
         assert response.status_code == BAD_REQUEST
+
+# TODO: Write test cases for the preprocessor classes and models
+# TODO: Make test dependency hierarchy

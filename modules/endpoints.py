@@ -3,12 +3,18 @@ from different types of models with a URL.
 """
 import logging
 from flask_restful import Resource, reqparse
+from modules.data_preprocessing import LanguagePreprocessor
+from modules.data_preprocessing import NumericalPreprocessor
 from modules.models import LanguageModel, NumericalModel
 
-# Loading models can be expensive, so they are initialized output the
-# class declarations to ensure they are only loaded once
+# Loading models and preprocessors can be expensive, so they are
+# initialized outside the endpoint controllers to ensure that they are
+# only loaded once
 language_model = LanguageModel()
 numerical_model = NumericalModel()
+
+language_preprocessor = LanguagePreprocessor()
+numerical_preprocessor = NumericalPreprocessor()
 
 OK = 200
 BAD_REQUEST = 400
@@ -59,7 +65,8 @@ class StringPrediction(Resource):
             logging.error(
                 '\t{} ({}): {}'.format(error_type, BAD_REQUEST, error_msg))
             return response, BAD_REQUEST
-        input_data = args['input_data']
+        input_data_raw = args['input_data']
+        input_data = language_preprocessor.preprocess_data(input_data_raw)
         output = language_model.predict(input_data)
         logging.info('\tPrediction generated: {}'.format(output))
         response = {'prediction': output}
@@ -106,7 +113,8 @@ class FloatPrediction(Resource):
             logging.error(
                 '\t{} ({}): {}'.format(error_type, BAD_REQUEST, error_msg))
             return response, BAD_REQUEST
-        input_data = args['input_data']
+        input_data_raw = args['input_data']
+        input_data = numerical_preprocessor.preprocess_data(input_data_raw)
         output = numerical_model.predict(input_data)
         logging.info('\tPrediction generated: {}'.format(output))
         response = {'prediction': output}
