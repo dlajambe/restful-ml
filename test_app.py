@@ -3,8 +3,8 @@ from flask.testing import FlaskClient
 import pytest
 
 from modules.initialization import create_app, create_api
-from modules.endpoints import StringPrediction, FloatPrediction, BAD_REQUEST
-from modules.endpoints import BAD_REQUEST, OK
+from modules.data_preprocessing import LanguagePreprocessor, NumericalPreprocessor
+from modules.endpoints import StringPrediction, FloatPrediction, BAD_REQUEST, OK
 
 BASE = 'http://127.0.0.1:5000'
 
@@ -15,7 +15,7 @@ def client() -> Flask:
     client = app.test_client()
     yield client
 
-class TestStringPrediction():
+class TestStringPrediction:
     def test_good_post(self, client: FlaskClient):
         """Tests a correctly formatted POST request at the
         StringPrediction endpoint."""
@@ -37,7 +37,7 @@ class TestStringPrediction():
         # status code
         assert response.status_code == BAD_REQUEST
 
-class TestFloatPrediction():
+class TestFloatPrediction:
     def test_good_post(self, client: FlaskClient):
         """Tests a POST request at the FloatPrediction endpoint."""
         input_data = {'input_data' : [0.5, 0.6, 10.0]}
@@ -57,5 +57,4 @@ class TestFloatPrediction():
         # status code
         assert response.status_code == BAD_REQUEST
 
-# TODO: Write test cases for the preprocessor classes and models
 # TODO: Make test dependency hierarchy

@@ -55,11 +55,10 @@ def initialize_file_logger():
         os.mkdir(log_root + year_str)
     if os.path.exists(log_root + year_str + '/' + month_str) == False:
         os.mkdir(log_root + year_str + '/' + month_str)
+    
     # Step 2 - Add a console handler and log file handler
-    # TODO: Add threadh name when multithreading is enabled
-    # [%(threadName)s]
     log_formatter = logging.Formatter(
-        '[%(asctime)s] [%(levelname)s]  %(message)s',
+        '[%(asctime)s] [Td=%(thread)d] [%(levelname)s] %(message)s',
         datefmt='%H:%M:%S')
     log_path = (log_root + year_str +'/' + month_str + '/' 
                 + 'ml_api_')
