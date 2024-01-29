@@ -3,8 +3,7 @@ from flask.testing import FlaskClient
 import pytest
 
 from modules.initialization import create_app, create_api
-from modules.data_preprocessing import LanguagePreprocessor, NumericalPreprocessor
-from modules.endpoints import StringPrediction, FloatPrediction, BAD_REQUEST, OK
+from modules.endpoints import StringPrediction, FloatPrediction, StatusCodes
 
 BASE = 'http://127.0.0.1:5000'
 
@@ -23,7 +22,7 @@ class TestStringPrediction:
         response = client.post(
             path=(BASE + StringPrediction.endpoint_suffix),
             json=input_data)
-        assert response.status_code == OK
+        assert response.status_code == StatusCodes.OK
 
     def test_bad_post(self, client: FlaskClient):
         """Tests an incorrectly formatted POST request at the
@@ -35,7 +34,7 @@ class TestStringPrediction:
 
         # Incorrectly formatted requests should return a BAD_REQUEST
         # status code
-        assert response.status_code == BAD_REQUEST
+        assert response.status_code == StatusCodes.BAD_REQUEST
 
 class TestFloatPrediction:
     def test_good_post(self, client: FlaskClient):
@@ -43,7 +42,7 @@ class TestFloatPrediction:
         input_data = {'input_data' : [0.5, 0.6, 10.0]}
         response = client.post(
             path=(BASE + FloatPrediction.endpoint_suffix), json=input_data)
-        assert response.status_code == OK
+        assert response.status_code == StatusCodes.OK
 
     def test_bad_post(self, client: FlaskClient):
         """Tests an incorrectly formatted POST request at the
@@ -55,6 +54,6 @@ class TestFloatPrediction:
 
         # Incorrectly formatted requests should return a BAD_REQUEST
         # status code
-        assert response.status_code == BAD_REQUEST
+        assert response.status_code == StatusCodes.BAD_REQUEST
 
 # TODO: Make test dependency hierarchy

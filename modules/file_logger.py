@@ -77,7 +77,7 @@ def initialize_file_logger():
     # Step 3 - Format the log output so it contains a time stamp and log
     # log level
     logging.basicConfig(handlers=handlers, level=logging.DEBUG)
-    logging.info('File logger initialized successfully.')
+    logging.info('The File logger was initialized successfully.')
     
 
     

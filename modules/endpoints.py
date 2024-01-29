@@ -16,8 +16,11 @@ numerical_model = NumericalModel()
 language_preprocessor = LanguagePreprocessor()
 numerical_preprocessor = NumericalPreprocessor()
 
-OK = 200
-BAD_REQUEST = 400
+class StatusCodes:
+    OK = 200
+    BAD_REQUEST = 400
+    NOT_FOUND = 404
+    INTERNAL_SERVER_ERROR = 500
 
 # TODO: Put duplicated POST request code in a common function that can
 # be called by any resource
@@ -63,14 +66,15 @@ class StringPrediction(Resource):
                 'error': error_type,
                 'message': error_msg}
             logging.error(
-                '\t{} ({}): {}'.format(error_type, BAD_REQUEST, error_msg))
-            return response, BAD_REQUEST
+                '\t{} ({}): {}'.format(
+                    error_type, StatusCodes.BAD_REQUEST, error_msg))
+            return response, StatusCodes.BAD_REQUEST
         input_data_raw = args['input_data']
         input_data = language_preprocessor.preprocess_data(input_data_raw)
         output = language_model.predict(input_data)
         logging.info('\tPrediction generated: {}'.format(output))
         response = {'prediction': output}
-        return response, OK
+        return response, StatusCodes.OK
     
 class FloatPrediction(Resource):
     """Generate a single prediction from a machine learning model at the
@@ -111,11 +115,12 @@ class FloatPrediction(Resource):
                 'error': error_type,
                 'message': error_msg}
             logging.error(
-                '\t{} ({}): {}'.format(error_type, BAD_REQUEST, error_msg))
-            return response, BAD_REQUEST
+                '\t{} ({}): {}'.format(
+                    error_type, StatusCodes.BAD_REQUEST, error_msg))
+            return response, StatusCodes.BAD_REQUEST
         input_data_raw = args['input_data']
         input_data = numerical_preprocessor.preprocess_data(input_data_raw)
         output = numerical_model.predict(input_data)
         logging.info('\tPrediction generated: {}'.format(output))
         response = {'prediction': output}
-        return response, OK
+        return response, StatusCodes.OK

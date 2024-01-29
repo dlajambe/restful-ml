@@ -14,7 +14,7 @@ def create_api(app: Flask) -> Api:
     api = Api(app)
     api.add_resource(StringPrediction, StringPrediction.endpoint_suffix)
     api.add_resource(FloatPrediction, FloatPrediction.endpoint_suffix)
-    logging.info('API initialized successfully')
+    logging.info('The REST API was initialized successfully')
     return api
 
 def create_app() -> Flask:
@@ -23,5 +23,5 @@ def create_app() -> Flask:
     """
     initialize_file_logger()
     app = Flask(__name__)
-    logging.info('Flask application initiailized successfully')
+    logging.info('The Flask application was initiailized successfully')
     return app
